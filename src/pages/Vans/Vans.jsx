@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-// https://youtu.be/nDGA3km5He4?t=3349
-// https://phenomenal-sunshine-94a254.netlify.app/
-
 export default function Vans() {
   const [vans, setVans] = useState([]);
 
