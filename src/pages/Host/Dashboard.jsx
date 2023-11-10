@@ -4,7 +4,7 @@ import { Link, Outlet } from "react-router-dom";
 export default function Dashboard() {
   return (
     <>
-      <div>This is the Dashboard</div>
+      <h1>This is the Dashboard</h1>
     </>
   );
 }

@@ -10,21 +10,34 @@ import Dashboard from "./pages/Host/Dashboard";
 import Income from "./pages/Host/Income";
 import Reviews from "./pages/Host/Reviews";
 import HostLayout from "./components/HostLayout";
+import HostVans from "./pages/Host/HostVans";
+import HostVanDetail from "./pages/Host/HostVanDetail";
+import HostDetailLayout from "./components/HostDetailLayout";
+import Pricing from "./pages/Host/Pricing";
+import Photos from "./pages/Host/Photos";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* you should setup like below with paht="/" & index for Home */}
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/vans" element={<Vans />} />
-          <Route path="/vans/:id" element={<VanDetail />} />
+          <Route path="about" element={<About />} />
+          <Route path="vans" element={<Vans />} />
+          <Route path="vans/:id" element={<VanDetail />} />
+          {/*not nested because not sharing UI */}
 
-          <Route path="/host" element={<HostLayout />}>
+          <Route path="host" element={<HostLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="income" element={<Income />} />
             <Route path="reviews" element={<Reviews />} />
+            <Route path="vans" element={<HostVans />} />
+            <Route path="vans/:id" element={<HostDetailLayout />}>
+              <Route index element={<HostVanDetail />} />
+              <Route path="pricing" element={<Pricing />} />
+              <Route path="photos" element={<Photos />} />
+            </Route>
           </Route>
         </Route>
       </Routes>
@@ -34,7 +47,7 @@ function App() {
 
 export default App;
 
-//https://youtu.be/nDGA3km5He4?t=6482
+//https://youtu.be/nDGA3km5He4?t=10210
 
 // https://phenomenal-sunshine-94a254.netlify.app/
 
