@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 export default function Vans() {
+  const [searchParams, setSeachParams] = useSearchParams();
+
+  const typeFilter = searchParams.get("type");
+
   const [vans, setVans] = useState([]);
 
   useEffect(() => {
@@ -14,7 +18,11 @@ export default function Vans() {
       });
   }, []);
 
-  const vanElements = vans.map((van) => (
+  const displayVans = typeFilter
+    ? vans.filter((van) => van.type === typeFilter)
+    : vans;
+
+  const vanElements = displayVans.map((van) => (
     <div className="van-tile" key={van.id}>
       {/* <Link to={`/vans/${van.id}`} */}
       <Link to={van.id}>
