@@ -43,6 +43,39 @@ export default function Vans() {
     <div className="van-list-container">
       <h1>Explore our van options</h1>
       <div className="van-list-filter-buttons">
+        <button
+          className="van-type simple"
+          onClick={() => setSeachParams({ type: "simple" })}
+        >
+          Simple
+        </button>
+        <button
+          className="van-type luxury"
+          onClick={() => setSeachParams({ type: "luxury" })}
+        >
+          Luxury
+        </button>
+        <button
+          className="van-type rugged"
+          onClick={() => setSeachParams({ type: "rugged" })}
+        >
+          Rugged
+        </button>
+        <button
+          className="van-type clear-filter"
+          onClick={() => setSeachParams({})}
+        >
+          Clear Filter
+        </button>
+      </div>
+      <div className="van-list">{vanElements}</div>
+    </div>
+  );
+}
+
+//this is one way of using filter. the above uses the setSeachParams
+/* 
+<div className="van-list-filter-buttons">
         <Link to="?type=simple" className="van-type simple">
           Simple
         </Link>
@@ -56,7 +89,5 @@ export default function Vans() {
           Clear Filter
         </Link>
       </div>
-      <div className="van-list">{vanElements}</div>
-    </div>
-  );
-}
+
+*/
