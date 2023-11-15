@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 export default function VanDetail() {
   const params = useParams();
+  const location = useLocation(); //this is how we grab the state saved in <Link in Vans.jsx
+
+  const linkTo =
+    location.state === null ? ".." : `/vans?${location.state.search}`;
+
+  //optional chaining
+  const search = location.state?.search || "";
+  // same as
+  // const search = location.state && location.state.search || ""
+
+  const type = location.state?.type || "all";
 
   const [van, setVan] = useState(null);
 
@@ -18,6 +29,14 @@ export default function VanDetail() {
 
   return (
     <div className="van-detail-container">
+      <Link
+        to={`..${search}`}
+        relative="path" //! this is as oppose to being relative to route for the to=""
+        className="back-button"
+      >
+        &larr; <span>Back to {type} vans</span>
+      </Link>
+
       {van ? (
         <div className="van-detail">
           <img src={van.imageUrl} />
