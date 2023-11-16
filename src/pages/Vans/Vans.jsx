@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useLoaderData, useSearchParams } from "react-router-dom";
 import { getVans } from "../../api";
+
+export function loader() {
+  return "Vans data goes here";
+}
 
 export default function Vans() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [vans, setVans] = useState([]);
   const [loading, setLoading] = useState(false); //just to show while loading
   const [error, setError] = useState(null); //state when in error of fetching
+
+  const data = useLoaderData();
+  console.log(data);
 
   const typeFilter = searchParams.get("type");
 
