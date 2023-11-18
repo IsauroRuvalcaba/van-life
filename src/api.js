@@ -1,5 +1,6 @@
 export async function getVans() {
   const res = await fetch("/api/vans");
+
   //this is checking if 400 or 500 level error are given by server
   if (!res.ok) {
     throw {
@@ -9,6 +10,7 @@ export async function getVans() {
     };
   }
   const data = await res.json();
+
   return data.vans;
 }
 
