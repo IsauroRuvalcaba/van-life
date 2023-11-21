@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, Outlet, useParams } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useLoaderData,
+  useParams,
+} from "react-router-dom";
+import { getHostVans } from "../../api";
+
+export function loader({ params }) {
+  return getHostVans(params.id);
+}
 
 export default function VanDetail() {
   const activeStyle = {
@@ -8,23 +19,7 @@ export default function VanDetail() {
     color: "#161616",
   };
 
-  const params = useParams();
-
-  const [currentVan, setCurrentVan] = useState([]);
-
-  useEffect(() => {
-    fetch(`/api/host/vans/${params.id}`)
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setCurrentVan(data.vans);
-      });
-  }, [params]);
-
-  if (!currentVan) {
-    return <h1>Loading...</h1>;
-  }
+  const currentVan = useLoaderData();
 
   return (
     <section>
