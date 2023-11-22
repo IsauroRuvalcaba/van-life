@@ -532,3 +532,7 @@ i[class*="van-type-"] {
   color: white;
   font-family: "Inter", sans-serif;
 }
+/* this is the "You must log in first" message in login page */
+.red {
+  color: #cc0000;
+}
