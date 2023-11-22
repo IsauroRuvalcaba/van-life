@@ -28,6 +28,7 @@ import HostVanPhotos from "./pages/Host/HostVanPhotos";
 import NotFound from "./pages/NotFound";
 import Error from "./components/Error";
 import Login from "./pages/Login";
+import { requireAuth } from "./utils";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -44,49 +45,21 @@ const router = createBrowserRouter(
       <Route path="vans/:id" element={<VanDetail />} loader={vanDetailLoader} />
       {/*not nested because not sharing UI */}
 
-      <Route
-        path="host"
-        element={<HostLayout />}
-        loader={async () => {
-          const isLoggedIn = true;
-          if (!isLoggedIn) {
-            throw redirect("/login");
-          }
-          return null;
-        }}
-      >
+      <Route path="host" element={<HostLayout />}>
         <Route
           index
           element={<Dashboard />}
-          loader={async () => {
-            const isLoggedIn = true;
-            if (!isLoggedIn) {
-              throw redirect("/login");
-            }
-            return null;
-          }}
+          loader={async () => await requireAuth()}
         />
         <Route
           path="income"
           element={<Income />}
-          loader={async () => {
-            const isLoggedIn = true;
-            if (!isLoggedIn) {
-              throw redirect("/login");
-            }
-            return null;
-          }}
+          loader={async () => await requireAuth()}
         />
         <Route
           path="reviews"
           element={<Reviews />}
-          loader={async () => {
-            const isLoggedIn = true;
-            if (!isLoggedIn) {
-              throw redirect("/login");
-            }
-            return null;
-          }}
+          loader={async () => await requireAuth()}
         />
         <Route path="vans" element={<HostVans />} loader={hostVansLoader} />
         <Route
@@ -97,35 +70,17 @@ const router = createBrowserRouter(
           <Route
             index
             element={<HostVanInfo />}
-            loader={async () => {
-              const isLoggedIn = true;
-              if (!isLoggedIn) {
-                throw redirect("/login");
-              }
-              return null;
-            }}
+            loader={async () => await requireAuth()}
           />
           <Route
             path="pricing"
             element={<HostVanPricing />}
-            loader={async () => {
-              const isLoggedIn = true;
-              if (!isLoggedIn) {
-                throw redirect("/login");
-              }
-              return null;
-            }}
+            loader={async () => await requireAuth()}
           />
           <Route
             path="photos"
             element={<HostVanPhotos />}
-            loader={async () => {
-              const isLoggedIn = true;
-              if (!isLoggedIn) {
-                throw redirect("/login");
-              }
-              return null;
-            }}
+            loader={async () => await requireAuth()}
           />
         </Route>
       </Route>
