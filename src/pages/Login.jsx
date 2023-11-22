@@ -1,5 +1,6 @@
 import React from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import { loginUser } from "../api";
 
 export function loader({ request }) {
   //this is saved in the url when requireAuth() in utils.js is triggered in each protective route if not logged in
@@ -16,7 +17,8 @@ export default function Login() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(loginFormData);
+    // console.log(loginFormData);
+    loginUser(loginFormData).then((data) => console.log(data));
   }
 
   function handleChange(e) {
