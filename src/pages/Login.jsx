@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { Form, useLoaderData, useNavigate } from "react-router-dom";
 import { loginUser } from "../api";
 
 export function loader({ request }) {
-  //this is saved in the url when requireAuth() in utils.js is triggered in each protective route if not logged in
+  //this is saved in the url when requireAuth() in utils.js is triggered in each protective route if not logged in - change isLoggedIn = true in that function
   return new URL(request.url).searchParams.get("message");
+}
+
+export async function action() {
+  console.log("Action function");
+  return null;
 }
 
 export default function Login() {
@@ -18,10 +23,6 @@ export default function Login() {
 
   const message = useLoaderData();
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   console.log(status);
-  // }, [status]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -49,7 +50,7 @@ export default function Login() {
       {message && <h3 className="red">{message}</h3>}
       {error && <h3 className="red">{error.message}</h3>}
 
-      <form onSubmit={handleSubmit} className="login-form">
+      <Form method="post" className="login-form">
         <input
           name="email"
           onChange={handleChange}
@@ -67,7 +68,7 @@ export default function Login() {
         <button disabled={status === "submitting"}>
           {status === "submitting" ? "Logging in..." : "Log in"}
         </button>
-      </form>
+      </Form>
     </div>
   );
 }
