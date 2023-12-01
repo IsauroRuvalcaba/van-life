@@ -17,22 +17,21 @@ export default function Login() {
   const [error, setError] = useState(null);
 
   const message = useLoaderData();
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   console.log(status);
   // }, [status]);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     setStatus("submitting");
     setError(null);
 
-    loginUser(loginFormData)
-      .then((data) => console.log(data.user))
+    await loginUser(loginFormData)
+      .then((data) => navigate("/host", { replace: true }))
       .catch((err) => setError(err))
       .finally(() => setStatus("idle")); //this is needed so not stuck in "logging in" if err
-
-    setStatus("idle");
   }
 
   function handleChange(e) {
