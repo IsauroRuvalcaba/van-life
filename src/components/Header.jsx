@@ -5,6 +5,11 @@ import imageUrl from "../assets/images/avatar-icon.png";
 export default function Header() {
   //HostLayout.jsx has the other verstion of active link with NavLink
 
+  //momentarily here to remove the loggedIn key in local storage while in development
+  function fakeLogOut() {
+    localStorage.removeItem("loggedin");
+  }
+
   return (
     <>
       <header>
@@ -32,6 +37,7 @@ export default function Header() {
           <Link to="login" className="login-link">
             <img src={imageUrl} className="login-icon" />
           </Link>
+          <button onClick={fakeLogOut}>X</button>
         </nav>
       </header>
     </>
