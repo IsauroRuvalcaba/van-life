@@ -52,7 +52,7 @@ export async function loginUser(creds) {
 
   if (!res.ok) {
     //this error is checked in server.js under the post for login when user not found
-    //dosen't always have to throw new Error(). It can be an object like below
+    //dosen't always have to "throw new Error()". It can be an object like below
     throw {
       message: data.message,
       statusText: res.statusText,

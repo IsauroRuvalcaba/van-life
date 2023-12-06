@@ -20,10 +20,13 @@ export async function action({ request }) {
   const email = formData.get("email");
   const password = formData.get("password");
 
+  const pathname =
+    new URL(request.url).searchParams.get("redirectTo") || "/host";
+
   try {
     const data = await loginUser({ email: email, password: password });
     localStorage.setItem("loggedin", true);
-    return redirect("/host");
+    return redirect(pathname); //don't want this to be hard coded to /host route
   } catch (err) {
     //this is comming from api.js loginUser() under if(!res.ok)
     return err.message;

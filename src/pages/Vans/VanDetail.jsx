@@ -8,7 +8,7 @@ export function loader({ params }) {
 }
 
 export default function VanDetail() {
-  //useParams() hooks only works inside component. So can be used in loader() function above.
+  //useParams() hooks only works inside component. So cant be used in loader() function above.
   const params = useParams();
   const location = useLocation(); //this is how we grab the state saved in <Link in Vans.jsx
   const van = useLoaderData();
