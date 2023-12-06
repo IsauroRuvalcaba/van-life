@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Form, redirect, useLoaderData, useNavigate } from "react-router-dom";
+import {
+  Form,
+  redirect,
+  useActionData,
+  useLoaderData,
+  useNavigate,
+} from "react-router-dom";
 import { loginUser } from "../api";
 
 export function loader({ request }) {
@@ -12,28 +18,32 @@ export async function action({ request }) {
   // get method pulls data from the name attribute of the input in Form
   const email = formData.get("email");
   const password = formData.get("password");
-  const data = await loginUser({ email: email, password: password });
-  localStorage.setItem("loggedin", true);
+
+  try {
+    const data = await loginUser({ email: email, password: password });
+    localStorage.setItem("loggedin", true);
+    return redirect("/host");
+  } catch (err) {
+    //this is comming from api.js loginUser() under if(!res.ok)
+    return err.message;
+  }
 
   //! redirect can be used in non-functional components to navigate to different page
-  return redirect("/host");
 }
 
 export default function Login() {
   const [status, setStatus] = useState("idle");
-  const [error, setError] = useState(null);
 
   const message = useLoaderData();
   const navigate = useNavigate();
+  const errorMessage = useActionData(); //removed useState for error and using this
 
   async function handleSubmit(e) {
     e.preventDefault();
     setStatus("submitting");
-    setError(null);
 
     await loginUser(loginFormData)
       .then((data) => navigate("/host", { replace: true }))
-      .catch((err) => setError(err))
       .finally(() => setStatus("idle")); //this is needed so not stuck in "logging in" if err
   }
 
@@ -42,7 +52,7 @@ export default function Login() {
       <h1>Sign in to your account</h1>
 
       {message && <h3 className="red">{message}</h3>}
-      {error && <h3 className="red">{error.message}</h3>}
+      {errorMessage && <h3 className="red">{errorMessage}</h3>}
 
       {/* replace will prevent from going back to login page in history stack */}
       {/* it's better to put this logic in the loader of login page. prevents any access */}
