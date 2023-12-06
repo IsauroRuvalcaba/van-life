@@ -5,6 +5,7 @@ import {
   useActionData,
   useLoaderData,
   useNavigate,
+  useNavigation,
 } from "react-router-dom";
 import { loginUser } from "../api";
 
@@ -32,20 +33,9 @@ export async function action({ request }) {
 }
 
 export default function Login() {
-  const [status, setStatus] = useState("idle");
-
   const message = useLoaderData();
-  const navigate = useNavigate();
   const errorMessage = useActionData(); //removed useState for error and using this
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setStatus("submitting");
-
-    await loginUser(loginFormData)
-      .then((data) => navigate("/host", { replace: true }))
-      .finally(() => setStatus("idle")); //this is needed so not stuck in "logging in" if err
-  }
+  const navigation = useNavigation(); //* this in not useNavigate()
 
   return (
     <div className="login-container">
@@ -59,8 +49,8 @@ export default function Login() {
       <Form method="post" className="login-form" replace>
         <input name="email" type="email" placeholder="Email address" />
         <input name="password" type="password" placeholder="Password" />
-        <button disabled={status === "submitting"}>
-          {status === "submitting" ? "Logging in..." : "Log in"}
+        <button disabled={navigation.state === "submitting"}>
+          {navigation.state === "submitting" ? "Logging in..." : "Log in"}
         </button>
       </Form>
     </div>
@@ -83,4 +73,21 @@ async function handleSubmit(e) {
     setStatus("idle");
     console.log(status);
   }
+*/
+
+/*
+
+
+  const [status, setStatus] = useState("idle");
+  const navigate = useNavigate();
+  
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setStatus("submitting");
+
+    await loginUser(loginFormData)
+      .then((data) => navigate("/host", { replace: true }))
+      .finally(() => setStatus("idle")); //this is needed so not stuck in "logging in" if err
+  }
+
 */
